@@ -1,5 +1,5 @@
-import { shopify } from "../shopify.server";
+import { login } from "../shopify.server";
 
-export async function loader({ request }) {
-  return shopify.login(request);
-}
+export const loader = async ({ request }) => {
+  return login(request);
+};
