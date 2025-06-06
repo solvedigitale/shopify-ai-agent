@@ -1,12 +1,27 @@
 import { PrismaClient } from "@prisma/client";
 
+// Hardcode database URL to bypass Vercel environment variable issues
+const databaseUrl = "postgresql://shopify_db_owner:npg_dSXvLcKnVG37@ep-plain-sunset-a8qqj9uh-pooler.eastus2.azure.neon.tech/shopify_db?sslmode=require";
+
 if (process.env.NODE_ENV !== "production") {
   if (!global.prismaGlobal) {
-    global.prismaGlobal = new PrismaClient();
+    global.prismaGlobal = new PrismaClient({
+      datasources: {
+        db: {
+          url: databaseUrl
+        }
+      }
+    });
   }
 }
 
-const prisma = global.prismaGlobal ?? new PrismaClient();
+const prisma = global.prismaGlobal ?? new PrismaClient({
+  datasources: {
+    db: {
+      url: databaseUrl
+    }
+  }
+});
 
 export default prisma;
 
